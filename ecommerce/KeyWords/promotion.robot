@@ -6,75 +6,19 @@ Open eCom Web
     Open Browser           ${URL_WEB}            ${BROWSER}
     Set Window Size         640                 1136
 
-Accept and Next
-    ${count}=           Get Matching Xpath Count    ${chk_accept}
-    Log To Console              ${count}
-    Run Keyword If    ${count} > 0             Click Element    ${chk_accept}
-    Wait Until Element Is Visible    ${btn_accept}    ${EXPECT_LOADTIME}
-    Sleep               2s
-    Click Element    ${btn_accept}
-    Sleep               2s
-
-Fill Shipping Form
-    Wait Until Element Is Not Visible   ${loader}    ${EXPECT_LOADTIME}
-    Fill Customer Form
-    Wait Until Element Is Visible       ${co_changeAddress}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_address_subdistrict}    ${EXPECT_LOADTIME}
-    Input Text    ${co_changeAddress}    เลขที่ 1
-    Input Text    ${co_address_subdistrict}    ดินแดง
-    Sleep           2s
-    Wait Until Element Is Visible    //ul[@class='typeahead-selector']/div[1]       ${EXPECT_LOADTIME}
-    Click Element    //ul[@class='typeahead-selector']/div[1]
-
-Fill Customer Form
-    Wait Until Element Is Not Visible   ${loader}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_name}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_phone}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_email}    ${EXPECT_LOADTIME}
-    Input Text    ${co_name}     บารมี วัฒนคุณานนท์
-    Input Text    ${co_phone}    0992944928
-    Input Text    ${co_email}    bmqdev@mailinator.com
-
-Fill Address Form on Address Page
-    Wait Until Element Is Visible       ${survey_changeAddress}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_address_subdistrict}    ${EXPECT_LOADTIME}
-    Input Text    ${survey_changeAddress}    เลขที่ 1
-    Sleep           2s
-    Input Text    ${co_address_subdistrict}    ดินแด
-    Sleep           2s
-    Wait Until Element Is Visible    //ul[@class='typeahead-selector']/div[1]       ${EXPECT_LOADTIME}
-    Click Element    //ul[@class='typeahead-selector']/div[1]
-
-Fill Survey Shipping Form
-    Wait Until Element Is Not Visible   ${loader}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_name}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_phone}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${co_email}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${survey_changeAddress}    ${EXPECT_LOADTIME}
-    Wait Until Element Is Visible       ${survey_address_subdistrict}    ${EXPECT_LOADTIME}
-
-    Input Text    ${co_name}     บารมี วัฒนคุณานนท์
-    Input Text    ${co_phone}    0992944928
-    Input Text    ${co_email}    bmqdev@mailinator.com
-    Input Text    ${survey_changeAddress}    เลขที่ 1
-    Input Text    ${survey_address_subdistrict}    ดินแดง
-    Sleep           3s
-    Wait Until Element Is Visible    //ul[@class='typeahead-selector']/div[1]       ${EXPECT_LOADTIME}
-    Click Element    //ul[@class='typeahead-selector']/div[1]
-
 Go to product and add to cart
-    [Arguments]      ${product_id}          ${qty_value}=1
-    ${URL}=      Convert To String        ${STORE_URL}/products/${product_id}
-    Go To           ${URL}
-    Sleep           1s
+    [Arguments]         ${product_id}          ${qty_value}=1
+    ${URL}=             Convert To String        ${STORE_URL}/products/${product_id}
+    Go To               ${URL}
+    Sleep               1s
     Execute JavaScript      window.scrollBy(0, 600)
-    Sleep           1s
-    Wait Until Element Is Visible    ${qty}             ${EXPECT_LOADTIME}
-    Input Text                       ${qty}             ${qty_value}
-    Wait Until Element Is Visible    ${btn_add_to_cart}    ${EXPECT_LOADTIME}
-    Click Element    ${btn_add_to_cart}
-    Wait Until Element Is Visible    ${btn_next}    ${EXPECT_LOADTIME}
-    Click Element    ${btn_next}
+    Sleep               1s
+    Wait Until Element Is Visible       ${qty}                  ${EXPECT_LOADTIME}
+    Input Text                          ${qty}                  ${qty_value}
+    Wait Until Element Is Visible       ${btn_add_to_cart}      ${EXPECT_LOADTIME}
+    Click Element                       ${btn_add_to_cart}
+    Wait Until Element Is Visible       ${btn_next}             ${EXPECT_LOADTIME}
+    Click Element                       ${btn_next}
 
 Go to product and add to survey
     [Arguments]      ${product_id}
@@ -96,11 +40,69 @@ Go to product and add to req2buy
     Wait Until Element Is Visible    ${btn_next}    ${EXPECT_LOADTIME}
     Click Element    ${btn_next}
 
+Accept and Next
+    ${count}=           Get Matching Xpath Count    ${chk_accept}
+    Log To Console              ${count}
+    Run Keyword If    ${count} > 0             Click Element    ${chk_accept}
+    Wait Until Element Is Visible    ${btn_accept}    ${EXPECT_LOADTIME}
+    Sleep               2s
+    Click Element    ${btn_accept}
+    Sleep               2s
+
+# ----- Address Page
 Go to address page and edit address
     Go To           ${STORE_URL}/address/?url=/cart
     Fill Address Form on Address Page
     Click Element    ${btn_accept}
     Sleep               2s
+
+Fill Address Form on Address Page
+    Wait Until Element Is Visible       ${survey_changeAddress}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_address_subdistrict}    ${EXPECT_LOADTIME}
+    Input Text    ${survey_changeAddress}    เลขที่ 1
+    Sleep           2s
+    Input Text    ${co_address_subdistrict}    ดินแด
+    Sleep           2s
+    Wait Until Element Is Visible    //ul[@class='typeahead-selector']/div[1]       ${EXPECT_LOADTIME}
+    Click Element    //ul[@class='typeahead-selector']/div[1]
+
+# ----- Checkout Shipping
+Fill Shipping Form
+    Wait Until Element Is Not Visible   ${loader}    ${EXPECT_LOADTIME}
+    Fill Customer Form
+    Wait Until Element Is Visible       ${co_changeAddress}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_address_subdistrict}    ${EXPECT_LOADTIME}
+    Input Text    ${co_changeAddress}    เลขที่ 1
+    Input Text    ${co_address_subdistrict}    ดินแดง
+    Sleep           2s
+    Wait Until Element Is Visible    //ul[@class='typeahead-selector']/div[1]       ${EXPECT_LOADTIME}
+    Click Element    //ul[@class='typeahead-selector']/div[1]
+
+Fill Customer Form
+    Wait Until Element Is Not Visible   ${loader}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_name}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_phone}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_email}    ${EXPECT_LOADTIME}
+    Input Text    ${co_name}     บารมี วัฒนคุณานนท์
+    Input Text    ${co_phone}    0992944928
+    Input Text    ${co_email}    bmqdev@mailinator.com
+
+Fill Survey Shipping Form
+    Wait Until Element Is Not Visible   ${loader}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_name}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_phone}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${co_email}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${survey_changeAddress}    ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible       ${survey_address_subdistrict}    ${EXPECT_LOADTIME}
+
+    Input Text    ${co_name}     บารมี วัฒนคุณานนท์
+    Input Text    ${co_phone}    0992944928
+    Input Text    ${co_email}    bmqdev@mailinator.com
+    Input Text    ${survey_changeAddress}    เลขที่ 1
+    Input Text    ${survey_address_subdistrict}    ดินแดง
+    Sleep           3s
+    Wait Until Element Is Visible    //ul[@class='typeahead-selector']/div[1]       ${EXPECT_LOADTIME}
+    Click Element    //ul[@class='typeahead-selector']/div[1]
 
 Fill promotion code and apply
     [Arguments]         ${promocode}
@@ -126,18 +128,31 @@ Checkout req2buy
     Wait Until Element Is Visible    ${btn_next}    ${EXPECT_LOADTIME}
     Click Element    ${btn_next}
     Wait Until Element Is Visible    //*[contains(text(), 'ขอบคุณที่ท่านเลือกใช้สินค้าและบริการจาก SCG ONLINE STORE')]       ${EXPECT_LOADTIME}
+    Log To Console      checkout
 
 Display reward text on checkout payment corectly
+    [Arguments]         ${promocode}            ${text}
+    Element Should Be Visible       ${promo_code_desc}
+    Element Should Contain          ${promo_code_desc}   โปรโมชั่นโค้ด ${promocode}
+    Element Should Contain           ${payment_reward_text}   ${text}
+    Wait Until Element Is Visible    //*[contains(text(), 'โปรโมชั่นโค้ด ${promocode}')]       ${EXPECT_LOADTIME}
+    Element Should Not Be Visible    ${btn_next}
+    Element Should Not Be Visible    ${btn_back_to_shop}
+    Element Should Not Be Visible    ${co_promocode}
+    Element Should Not Be Visible    ${co_coupon}
+
+Display reward text on purchase page corectly
     [Arguments]         ${promocode}            ${text}
     Element Should Be Visible    ${payment_promo_code}
     Element Should Contain       ${payment_promo_code}   ${promocode}
     # Run Keyword If    ${text} !== ${EMPTY}             Element Should Be Visible    ${payment_reward_text}
     # Element Should Be Visible    ${payment_reward_text}
-    Element Should Contain       ${payment_reward_text}   ${text}
+    Element Should Contain           ${payment_reward_text}   ${text}
+    Wait Until Element Is Visible    //*[contains(text(), 'โปรโมชั่นโค้ด ${promocode}')]       ${EXPECT_LOADTIME}
     Element Should Not Be Visible    ${btn_next}
     Element Should Not Be Visible    ${btn_back_to_shop}
     Element Should Not Be Visible    ${co_promocode}
-    Element Should Not Be Visible    ${co_e_coupon}
+    Element Should Not Be Visible    ${co_coupon}
 
 Display checkout payment without promotion form corectly 
     Wait Until Element Is Visible    //*[contains(text(), 'Card Number')]         ${EXPECT_LOADTIME}
@@ -145,7 +160,7 @@ Display checkout payment without promotion form corectly
     Element Should Not Be Visible    ${btn_next}
     Element Should Not Be Visible    ${btn_back_to_shop}
     Element Should Not Be Visible    ${co_promocode}
-    Element Should Not Be Visible    ${co_e_coupon}
+    Element Should Not Be Visible    ${co_coupon}
 
 Alert product not match
     Wait Until Element Is Visible    //*[@id="swal2-title"]    ${EXPECT_LOADTIME}
@@ -161,13 +176,18 @@ Alert promotion expired
 Use this code and expected
     [Arguments]             ${promocode}
     Click Element           ${use_this_code}
-    Display admin will verify this code         ${promocode}
-
+    Wait Until Element Is Visible           ${co_promocode_tag}     ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible           ${co_remove_reward}     ${EXPECT_LOADTIME}
+    Element Should Contain                  ${co_promocode_tag}     ${promocode}
+    Sleep       1s
+    
 Display admin will verify this code
     [Arguments]             ${promocode}
-    ${reward_text}=         Get Text             ${co_reward}
+    Wait Until Element Is Visible           ${promo_code_desc}       ${EXPECT_LOADTIME}
+    Element Should Contain  ${promo_code_desc}   โปรโมชั่นโค้ด: ${promocode}
+    ${reward_text}=         Get Text             ${co_coupon_note}
     Log To Console          ${reward_text}
-    Should Contain          ${reward_text}         สำหรับโปรโมชั่นโค้ด "${promocode}" ทางบริษัทฯ จะทำการตรวจสอบ หากเป็นไปตามเงื่อนไข ของสมนาคุณจะถูกจัดส่งให้ท่านภายใน 30 วันทำการหลังจบกิจกรรม
+    Should Contain          ${reward_text}         * ท่านจะได้รับส่วนลด หรือของสมนาคุณ หากเป็นไปตามเงื่อนไขที่บริษัทฯ กำหนด โดยรายละเอียดจะชี้แจงไปในใบเสนอราคา
     Sleep                   2s
 
 Go to admin and login
@@ -214,6 +234,20 @@ Thank you and display promotion code text
     Should Contain          ${text2}         หากเป็นไปตามเงื่อนไข ของสมนาคุณจะถูกจัดส่งให้ท่านภายใน 30 วันทำการหลังจบกิจกรรม
     Sleep                   2s
 
+Thank you and display coupon remark
+    [Arguments]             ${coupon}
+    Wait Until Element Is Visible    ${thk_promocode_text1}         ${EXPECT_LOADTIME}
+    Wait Until Element Is Visible    ${thk_promocode_text3}         ${EXPECT_LOADTIME}
+    Element Should Contain           ${thk_promocode_text1}         ท่านได้ใช้รหัส ${coupon}
+    Element Should Contain           ${thk_promocode_text2}         ทางบริษัทฯ จะทำการตรวจสอบ ท่านจะได้รับส่วนลด หรือของสมนาคุณหากเป็นไปตามเงื่อนไข
+    Element Should Contain           ${thk_promocode_text3}         ของสมนาคุณจะถูกจัดส่งให้ท่านภายใน 30 วันทำการหลังจบกิจกรรม
+
+Thank you not display coupon remark
+    [Arguments]             ${coupon}
+    Element Should Not Be Visible           ${thk_promocode_text1}         ท่านได้ใช้รหัส ${coupon}
+    Element Should Not Be Visible           ${thk_promocode_text2}         ทางบริษัทฯ จะทำการตรวจสอบ ท่านจะได้รับส่วนลด หรือของสมนาคุณหากเป็นไปตามเงื่อนไข
+    Element Should Not Be Visible           ${thk_promocode_text3}         ของสมนาคุณจะถูกจัดส่งให้ท่านภายใน 30 วันทำการหลังจบกิจกรรม
+
 Go to promotion list
     [Arguments]      ${site}=scg
     ${URL}=         Convert To String        ${STORE_URL}/promotions/${site}
@@ -230,24 +264,28 @@ Fill e-coupon code and apply
     Click Element       ${co_apply_coupon}
 
 Display e-coupon discount on checkout page correctly
-    [Arguments]         ${coupon}       ${discountText}
+    [Arguments]         ${coupon}       ${discount}
     Wait Until Element Is Visible           ${co_coupon_tag}     ${EXPECT_LOADTIME}
     Wait Until Element Is Visible           ${co_remove_coupon}     ${EXPECT_LOADTIME}
     Wait Until Element Is Visible           ${co_coupon_discount}     ${EXPECT_LOADTIME}
     Wait Until Element Is Visible           ${co_coupon_desc}     ${EXPECT_LOADTIME}
 
-    Element Should Contain       ${co_coupon_tag}           ${coupon}
-    Element Should Contain       ${co_coupon_desc}          คูปองส่วนลด ${coupon}
-    Element Should Contain       ${co_coupon_discount}      ${discountText}
+    Element Should Contain       ${co_coupon_tag}               ${coupon}
+    Element Should Contain       ${co_coupon_desc}              คูปองส่วนลด ${coupon}
+    ${coupon_discount}=          Get Text                       ${co_coupon_discount}
+    ${coupon_discount}=	         Replace String	                ${coupon_discount}      ฿      ${EMPTY}
+    Should Contain               ${coupon_discount}             ${discount}
 
 Display e-coupon discount on payment page correctly
-    [Arguments]         ${coupon}       ${discountText}
+    [Arguments]         ${coupon}       ${discount}
     Element Should Not Be Visible           ${co_coupon_tag}     ${EXPECT_LOADTIME}
     Element Should Not Be Visible           ${co_remove_coupon}     ${EXPECT_LOADTIME}
     Wait Until Element Is Visible           ${co_coupon_discount}     ${EXPECT_LOADTIME}
     Wait Until Element Is Visible           ${co_coupon_desc}     ${EXPECT_LOADTIME}
     Element Should Contain                  ${co_coupon_desc}          คูปองส่วนลด ${coupon}
-    Element Should Contain                  ${co_coupon_discount}      ${discountText}
+    ${coupon_discount}=          Get Text                       ${co_coupon_discount}
+    ${coupon_discount}=	         Replace String	                ${coupon_discount}      ฿      ${EMPTY}
+    Should Contain               ${coupon_discount}             ${discount}
 
 Display e-coupon desc and remark on checkout page correctly
     [Arguments]         ${coupon}       ${discount}
@@ -260,11 +298,13 @@ Display e-coupon desc and remark on checkout page correctly
     Element Should Be Visible           ${co_coupon_desc}       ${EXPECT_LOADTIME}
     Element Should Be Visible           ${co_coupon_note}       ${EXPECT_LOADTIME}
     Sleep                               3s
-    Wait Until Element Is Visible       //*[contains(text(), '* ท่านจะได้รับส่วนลด หรือของสมนาคุณ หากเป็นไปตามเงื่อนไขที่บริษัทฯ กำหนด')]     ${EXPECT_LOADTIME}
+    Element Should Contain              ${co_coupon_desc}       คูปองส่วนลด: ${coupon} มูลค่า ฿${discount} บาท
+    Element Should Contain              ${co_coupon_note}       * ท่านจะได้รับส่วนลด หรือของสมนาคุณ หากเป็นไปตามเงื่อนไขที่บริษัทฯ กำหนด โดยรายละเอียดจะชี้แจงไปในใบเสนอราคา
 
 Get purchase code and go to detail page  
     Get purchase code    
     Go to purchases detail page            ${PURCHESE_CODE}
+    Sleep                                  2s
 
 Get purchase code 
     ${code}=                Get Text               ${purchase_code}
@@ -288,8 +328,10 @@ Display coupon and discount on purchase
     Wait Until Element Is Visible       //*[contains(text(),'หมายเลขการสั่งซื้อ')]
     Wait Until Element Is Visible       //*[contains(text(),'ชื่อ-นามสกุล')]
     Sleep       3s
-    Element Should Be Visible           //td[contains(text(),'${discount}')]
-    Element Should Be Visible           //td[contains(text(),'คูปองส่วนลด ${coupon}')]
+    ${coupon_discount}=                 Get Text                        ${co_coupon_discount}
+    ${coupon_discount}=	                Replace String	                ${coupon_discount}      ฿      ${EMPTY}
+    Should Contain                      ${coupon_discount}              ${discount}
+    Element Should Contain              ${co_coupon_desc}               คูปองส่วนลด ${coupon}
 
 Ok, I see
     Wait Until Element Is Visible       ${swal_confirm}

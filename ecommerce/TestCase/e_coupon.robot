@@ -27,11 +27,11 @@ TC_COUPON_01
     Accept and Next
     Fill Shipping Form
     Fill e-coupon code and apply         ${ECOUPON}
-    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ฿${DISCOUNT}
+    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ${DISCOUNT}
     Checkout
-    Display e-coupon discount on payment page correctly       ${ECOUPON}        ฿${DISCOUNT} 
+    Display e-coupon discount on payment page correctly       ${ECOUPON}        ${DISCOUNT} 
     Get purchase code and go to detail page  
-    Display coupon and discount on purchase         ${ECOUPON}        ${DISCOUNT}
+    Display coupon and discount on purchase                   ${ECOUPON}        ${DISCOUNT}
 
 TC_COUPON_01_01
     # [Tags]   case success
@@ -45,9 +45,9 @@ TC_COUPON_01_01
     Fill Survey Shipping Form
     # Fill Shipping Form
     Fill e-coupon code and apply         ${ECOUPON}
-    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ฿${DISCOUNT}
+    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ${DISCOUNT}
     Checkout
-    Display e-coupon discount on payment page correctly       ${ECOUPON}        ฿${DISCOUNT} 
+    Display e-coupon discount on payment page correctly       ${ECOUPON}        ${DISCOUNT} 
     Get purchase code and go to detail page  
     Display coupon and discount on purchase                   ${ECOUPON}        ${DISCOUNT}
 
@@ -57,6 +57,7 @@ TC_COUPON_01_02
     ${PRODUCT_UID}=           Convert To String        P1000069
     ${ECOUPON}=               Convert To String        ECLIVE
     ${DISCOUNT}=              Convert To String        -1,000.00
+    ${DISCOUNT_}=             Convert To String        1,000
 
     Go to product and add to req2buy      ${PRODUCT_UID}
     Accept and Next
@@ -65,10 +66,12 @@ TC_COUPON_01_02
     Display e-coupon desc and remark on checkout page correctly      ${ECOUPON}    ${DISCOUNT}
     Next Step
     Display one next btn
-    Display e-coupon desc and remark on checkout page correctly      ${ECOUPON}    ${DISCOUNT}
+    Display e-coupon desc and remark on checkout page correctly      ${ECOUPON}    ${DISCOUNT_}
     Checkout req2buy
-    Get purchase code and go to detail page  
-    Display coupon and discount on purchase                   ${ECOUPON}        0.00
+    Get purchase code
+    Thank you and display coupon remark                             ${ECOUPON}
+    Go to purchases detail page                                     ${PURCHESE_CODE}
+    Display coupon and discount on purchase                         ${ECOUPON}        0.00
 
 TC_COUPON_02
     # [Tags]   valid case
@@ -82,7 +85,7 @@ TC_COUPON_02
     Go to product and add to cart        ${PRODUCT_UID_B}         3
     Accept and Next
     Fill e-coupon code and apply         ${ECOUPON}
-    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ฿${DISCOUNT}
+    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ${DISCOUNT}
     Go To                                ${STORE_URL}/cart
     Wait Until Element Is Visible        ${DEL_CART_ITEM_1}
     Click Element                        ${DEL_CART_ITEM_1}
@@ -115,7 +118,7 @@ TC_COUPON_03
 
     ${ECOUPON}=   Convert To String      ECLIVE
     Fill e-coupon code and apply         ${ECOUPON}
-    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ฿${DISCOUNT}
+    Display e-coupon discount on checkout page correctly      ${ECOUPON}        ${DISCOUNT}
     Reload Page
     Sleep         2s
 

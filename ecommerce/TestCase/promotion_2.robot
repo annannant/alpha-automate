@@ -13,124 +13,69 @@ ${EXPECT_LOADTIME}           12s
 *** Test Cases ***
 TC_PROMO_01
     [Tags]   every_no_maximum
-    [Documentation]    BUYNOW_SUCCESS - every purchase, no maximum              Buy 1000 Get 100 บาท, ทุกๆการซ์็อ, no maximum
-    ${PRODUCT_UID}=         Convert To String        P1002630
-    ${PROMOCODE}=           Convert To String        BROWN
-    ${EXPECT_REWARD}=       Convert To String        ท่านได้ใช้โปรโมชั่นโค้ด ${PROMOCODE} ของสมนาคุณที่ท่านจะได้รับ Tesco Lotus Gift Voucher จำนวน 300 บาท
+    [Documentation]    BUYNOW_SUCCESS - every purchase, no maximum              Buy 3 Qty get 1 set, ทุกๆการซ์็อ, no maximum
+    ${PRODUCT_UID}=         Convert To String        P1000885
+    ${PROMOCODE}=           Convert To String        CONY
+    ${EXPECT_REWARD}=       Convert To String        ท่านได้ใช้โปรโมชั่นโค้ด ${PROMOCODE} ของสมนาคุณที่ท่านจะได้รับ Central Gift Voucher จำนวน 3 Set
     ${REMARK_REWARD}=       Convert To String        *** จำกัด 1 คน 1 สิทธิ์ <3
 
-    Go to product and add to cart        ${PRODUCT_UID}         3
+    Go to product and add to cart        ${PRODUCT_UID}         9
     Accept and Next
     Fill Shipping Form
     Fill promotion code and apply                         ${PROMOCODE}
     Display remark reward corectly                        ${REMARK_REWARD}
     Display reward text on checkout page corectly         ${EXPECT_REWARD}
     Checkout
-    Display reward text on checkout payment corectly       ${PROMOCODE}      ( ${EXPECT_REWARD} )
-
-TC_PROMO_01_01
-    [Tags]   every_no_maximum
-    [Documentation]    SURVEY_SUCCESS - every purchase, no maximum              Buy 1000 Get 100 บาท, ทุกๆการซ์็อ, no maximum
-    ${PRODUCT_UID}=         Convert To String        P1009024
-    ${PROMOCODE}=           Convert To String        BROWN
-    ${EXPECT_REWARD}=       Convert To String        ท่านได้ใช้โปรโมชั่นโค้ด ${PROMOCODE} ของสมนาคุณที่ท่านจะได้รับ Tesco Lotus Gift Voucher จำนวน 100 บาท
-
-    Go to product and add to survey        ${PRODUCT_UID}
-    Accept and Next
-    Fill Survey Shipping Form
-    Fill promotion code and apply        ${PROMOCODE}
-    Display reward text on checkout page corectly         ${EXPECT_REWARD}
-    Checkout
-    Display reward text on checkout payment corectly       ${PROMOCODE}      ( ${EXPECT_REWARD} )
-
-TC_PROMO_01_02
-    [Tags]   every_no_maximum
-    [Documentation]    REQ2BUY_SUCCESS - every purchase, no maximum              Buy 1000 Get 100 บาท, ทุกๆการซ์็อ, no maximum
-    ${PRODUCT_UID}=         Convert To String        P1002615
-    ${PROMOCODE}=           Convert To String        BROWN
-    ${EXPECT_REWARD}=       Convert To String        สำหรับโปรโมชั่นโค้ด "${PROMOCODE}" ทางบริษัทฯ จะทำการตรวจสอบ หากเป็นไปตามเงื่อนไข ของสมนาคุณจะถูกจัดส่งให้ท่านภายใน 30 วันทำการหลังจบกิจกรรม
-
-    Go to product and add to req2buy        ${PRODUCT_UID}
-    Accept and Next
-    Fill Survey Shipping Form
-    Fill promotion code and apply        ${PROMOCODE}
-    Display admin will verify this code     ${PROMOCODE}
-    Next Step
-    Display one next btn
-    Display admin will verify this code      ${PROMOCODE}
-    Checkout req2buy
-    Thank you and display promotion code text           ${PROMOCODE}
+    Display reward text on checkout payment corectly       ${PROMOCODE}      ${EXPECT_REWARD}
+    Get purchase code and go to detail page  
+    Display reward text on purchase page corectly          ${PROMOCODE}      ${EXPECT_REWARD}
 
 TC_PROMO_02
     [Tags]   every_no_maximum
-    [Documentation]    BUYNOW_FAIL no code - every purchase, no maximum
-    ${TEXT}=                Convert To String        ไม่พบข้อมูลโปรโมชั่น
-    ${PRODUCT_UID}=         Convert To String        P1002630
-    ${PROMOCODE}=           Convert To String        BROWN1
-    Go to product and add to cart        ${PRODUCT_UID}             2
-    Accept and Next
-    Fill Shipping Form
-    Fill promotion code and apply        ${PROMOCODE}
-    Alert no promotion code
-    Use this code and expected           ${PROMOCODE}
-    Checkout
-    Display reward text on checkout payment corectly       ${PROMOCODE}      ${EMPTY}
-
-TC_PROMO_03
-    [Tags]   every_no_maximum
     [Documentation]      BUYNOW FAIL - cart items not match, every purchase, no maximum
     ${TEXT}=                Convert To String        รายการสินค้าไม่ตรงกับข้อกำหนดการใช้โปรโมชั่นโค้ดนี้
-    ${PRODUCT_UID}=         Convert To String        P1000874
-    ${PROMOCODE}=           Convert To String        BROWN
+    ${PRODUCT_UID}=         Convert To String        P1000888
+    ${PROMOCODE}=           Convert To String        CONY
     Go to product and add to cart        ${PRODUCT_UID}             1
     Accept and Next
     # Fill Shipping Form
     Fill promotion code and apply        ${PROMOCODE}
     Alert product not match
 
-# ---------------------------- expired ----------------------------
+# ----------------------- maximum ---------------------
+TC_PROMO_03
+    [Tags]   every_no_maximum
+    [Documentation]    BUYNOW_SUCCESS - every purchase, no maximum              Buy 3 Qty get 1 set, ทุกๆการซ์็อ, max 2
+    ${PRODUCT_UID}=         Convert To String        P1000888
+    ${PROMOCODE}=           Convert To String        CONY
+    ${EXPECT_REWARD}=       Convert To String        ท่านได้ใช้โปรโมชั่นโค้ด ${PROMOCODE} ของสมนาคุณที่ท่านจะได้รับ Central Gift Voucher จำนวน 2 Set
+
+    Go to product and add to cart        ${PRODUCT_UID}         9
+    Accept and Next
+    Fill Shipping Form
+    Fill promotion code and apply                         ${PROMOCODE}
+    Display reward text on checkout page corectly         ${EXPECT_REWARD}
+    Checkout
+    Display reward text on checkout payment corectly       ${PROMOCODE}      ${EXPECT_REWARD}
+    Get purchase code and go to detail page  
+    Display reward text on purchase page corectly          ${PROMOCODE}      ${EXPECT_REWARD}
+
+# ----------------------- minumum purchase ---------------------
 TC_PROMO_04
     [Tags]   every_no_maximum
-    [Documentation]      BUYNOW FAIL - cart items not match, every purchase, no maximum
-    ${TEXT}=                Convert To String        โปรโมชั่นโค้ดนี้หมดอายุแล้ว
-    ${PRODUCT_UID}=         Convert To String        P1000106
-    ${PROMOCODE}=           Convert To String        BROWN
-    Go to product and add to cart        ${PRODUCT_UID}             3
+    [Documentation]    BUYNOW_SUCCESS - every purchase, no maximum              Buy 3 Qty get 1 set, ตั้งแต่ 3 ชิ้น
+    ${PRODUCT_UID}=         Convert To String        P1000884
+    ${PROMOCODE}=           Convert To String        CONY
+    ${EXPECT_REWARD}=       Convert To String        ท่านได้ใช้โปรโมชั่นโค้ด ${PROMOCODE} ของสมนาคุณที่ท่านจะได้รับ Central Gift Voucher จำนวน 1 Set
+    ${REMARK_REWARD}=       Convert To String        *** จำกัด 1 คน 1 สิทธิ์ <3
+
+    Go to product and add to cart                         ${PRODUCT_UID}         9
     Accept and Next
-    Fill promotion code and apply        ${PROMOCODE}
-    Alert promotion expired
-
-# # ---------------------------- maximum ----------------------------
-# TC_PROMO_05
-#     [Tags]   every_with_maximum
-#     [Documentation]    BUYNOW_SUCCESS - every purchase, no maximum              Buy 1000 Get 100 บาท, ทุก ๆ การซื้อ จำกัด 200
-#     ${PRODUCT_UID}=         Convert To String        P1002622
-#     ${PROMOCODE}=           Convert To String        BROWN
-#     ${EXPECT_REWARD}=       Convert To String        ท่านได้ใช้โปรโมชั่นโค้ด ${PROMOCODE} ของสมนาคุณที่ท่านจะได้รับ Tesco Lotus Gift Voucher จำนวน 200 บาท
-
-#     Go to product and add to cart        ${PRODUCT_UID}
-#     Go to product and add to cart        ${PRODUCT_UID}
-#     Go to product and add to cart        ${PRODUCT_UID}
-#     Accept and Next
-#     Fill Shipping Form
-#     Fill promotion code and apply        ${PROMOCODE}
-#     Display reward text on checkout page corectly         ${EXPECT_REWARD}
-#     Checkout
-#     Display reward text on checkout payment corectly       ${PROMOCODE}      ( ${EXPECT_REWARD} )
-
-# # ---------------------------- minimun ----------------------------
-# TC_PROMO_06
-#     [Tags]   minimun_purchase
-#     [Documentation]    BUYNOW_SUCCESS - minimum purchase, no maximum              Buy 1000 Get 100 บาท, เมื่อซื้อตั้งแต่ xxx ขึ้นไป
-#     ${PRODUCT_UID}=         Convert To String        P1002537
-#     ${PROMOCODE}=           Convert To String        BROWN
-#     ${EXPECT_REWARD}=       Convert To String        ท่านได้ใช้โปรโมชั่นโค้ด ${PROMOCODE} ของสมนาคุณที่ท่านจะได้รับ กาแฟ จำนวน 1 กล่อง
-
-#     Go to product and add to cart        ${PRODUCT_UID}
-#     Go to product and add to cart        ${PRODUCT_UID}
-#     Accept and Next
-#     Fill Shipping Form
-#     Fill promotion code and apply        ${PROMOCODE}
-#     Display reward text on checkout page corectly         ${EXPECT_REWARD}
-#     Checkout
-#     Display reward text on checkout payment corectly       ${PROMOCODE}      ( ${EXPECT_REWARD} )
+    Fill Shipping Form
+    Fill promotion code and apply                         ${PROMOCODE}
+    Display remark reward corectly                        ${REMARK_REWARD}
+    Display reward text on checkout page corectly         ${EXPECT_REWARD}
+    Checkout
+    Display reward text on checkout payment corectly      ${PROMOCODE}      ${EXPECT_REWARD}
+    Get purchase code and go to detail page  
+    Display reward text on purchase page corectly         ${PROMOCODE}      ${EXPECT_REWARD}
